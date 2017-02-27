@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:orientation="vertical"
-    tools:context="br.com.bunker.MainActivity">
+    tools:context="br.com.bunker.view.MainActivity">
 
     <TextView
         android:id="@+id/txt1"

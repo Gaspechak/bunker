@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Bunker</string>
+    <string name="email_hint">E-mail</string>
+    <string name="password_hint">Password</string>
+    <string name="Login">Entrar</string>
+    <string name="hint_login">Entrar</string>
 </resources>
