@@ -11,23 +11,24 @@ import br.com.bunker.view.LoginView;
 
 public class LoginPresenter {
 
-    LoginView loginView;
+    private LoginView loginView;
 
     public LoginPresenter(LoginView loginView) {
         this.loginView = loginView;
     }
 
-
     public void login(String email, String password) {
-        FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    loginView.showMainActivity();
-                } else {
-                    loginView.showMessage(task.getException().getMessage());
+        if (!email.isEmpty() && !password.isEmpty()) {
+            FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        loginView.showMainActivity();
+                    } else {
+                        loginView.showMessage(task.getException().getMessage());
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }
