@@ -31,5 +31,4 @@
         <item name="android:textSize">20sp</item>
     </style>
 
-    <color name="white">#FFFFFF</color>
 </resources>
