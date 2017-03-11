@@ -7,4 +7,8 @@
     <string name="hint_name">Nome e sobrenome</string>
     <string name="hint_email">E-mail</string>
     <string name="hint_password">Senha</string>
+    <string name="hint_description">Descrição</string>
+    <string name="hint_url">Url</string>
+    <string name="hint_username">Email ou Nome de usuário</string>
+    <string name="hint_note">Anotações</string>
 </resources>
