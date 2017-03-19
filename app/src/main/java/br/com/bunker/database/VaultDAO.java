@@ -24,4 +24,9 @@ public class VaultDAO extends BaseDAO<Vault> {
     public void remove(String key) {
         db.child(databasePath).child(key).removeValue();
     }
+
+    @Override
+    public DatabaseReference getReference() {
+        return db.child(databasePath);
+    }
 }

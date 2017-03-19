@@ -20,4 +20,6 @@ abstract class BaseDAO<T> {
     public abstract void update(T entity);
 
     public abstract void remove(String key);
+
+    public abstract DatabaseReference getReference();
 }
