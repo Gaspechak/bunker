@@ -15,15 +15,16 @@ import com.google.firebase.database.FirebaseDatabase;
 import br.com.bunker.R;
 import br.com.bunker.database.VaultDAO;
 import br.com.bunker.model.Vault;
+import br.com.bunker.presenter.MainPresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainView {
 
     private FirebaseRecyclerAdapter<Vault, VaultViewHolder> adapter;
 
-    private VaultDAO db;
+    private MainPresenter presenter;
 
     @BindView(R.id.rview_vaults)
     RecyclerView rviewVaults;
@@ -39,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
             setContentView(R.layout.activity_main);
             ButterKnife.bind(this);
 
-            db = new VaultDAO();
+            presenter = new MainPresenter(this);
 
             rviewVaults.setHasFixedSize(true);
 
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
             rviewVaults.setLayoutManager(manager);
 
-            adapter = new FirebaseRecyclerAdapter<Vault, VaultViewHolder>(Vault.class, R.layout.view_holder_vault, VaultViewHolder.class, db.getReference()) {
+            adapter = new FirebaseRecyclerAdapter<Vault, VaultViewHolder>(Vault.class, R.layout.view_holder_vault, VaultViewHolder.class, presenter.getReference()) {
                 @Override
                 protected void populateViewHolder(VaultViewHolder viewHolder, Vault model, int position) {
                     viewHolder.setDescription(model.description);
