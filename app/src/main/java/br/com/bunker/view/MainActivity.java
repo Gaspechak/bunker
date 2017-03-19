@@ -3,6 +3,7 @@ package br.com.bunker.view;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -41,16 +42,25 @@ public class MainActivity extends AppCompatActivity {
             db = new VaultDAO();
 
             rviewVaults.setHasFixedSize(true);
-            rviewVaults.setLayoutManager(new LinearLayoutManager(this));
+
+            LinearLayoutManager manager = new LinearLayoutManager(this);
+
+            manager.setOrientation(LinearLayoutManager.VERTICAL);
+
+            rviewVaults.setLayoutManager(manager);
 
             adapter = new FirebaseRecyclerAdapter<Vault, VaultViewHolder>(Vault.class, R.layout.view_holder_vault, VaultViewHolder.class, db.getReference()) {
                 @Override
                 protected void populateViewHolder(VaultViewHolder viewHolder, Vault model, int position) {
                     viewHolder.setDescription(model.description);
+                    viewHolder.setUrl(model.url);
                 }
             };
 
             rviewVaults.setAdapter(adapter);
+
+            DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(rviewVaults.getContext(), manager.getOrientation());
+            rviewVaults.addItemDecoration(dividerItemDecoration);
         }
     }
 
