@@ -1,5 +1,6 @@
 package br.com.bunker.presenter;
 
+import br.com.bunker.R;
 import br.com.bunker.database.VaultDAO;
 import br.com.bunker.view.PasswordView;
 
@@ -13,8 +14,8 @@ public class PasswordPresenter {
         db = new VaultDAO();
     }
 
-    public void save(){
+    public void save() {
         db.insert(passwordView.getVault());
-        passwordView.showMessege("Salvo com sucesso!");
+        passwordView.showMessege(passwordView.getString(R.string.msg_success_saved));
     }
 }
