@@ -17,8 +17,12 @@
         </activity>
         <activity
             android:name=".view.LoginActivity"
-            android:theme="@style/noActionBar"></activity>
-        <activity android:name=".view.PasswordActivity"></activity>
+            android:theme="@style/noActionBar">
+
+        </activity>
+        <activity android:name=".view.PasswordActivity">
+
+        </activity>
     </application>
 
 </manifest>
