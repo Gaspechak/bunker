@@ -11,6 +11,8 @@ import butterknife.ButterKnife;
 
 public class VaultViewHolder extends RecyclerView.ViewHolder {
 
+    private View holderView;
+
     @BindView(R.id.vault_description)
     TextView vault_description;
 
@@ -20,6 +22,7 @@ public class VaultViewHolder extends RecyclerView.ViewHolder {
     public VaultViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        holderView = itemView;
     }
 
     public void setDescription(String description) {
@@ -28,5 +31,9 @@ public class VaultViewHolder extends RecyclerView.ViewHolder {
 
     public void setUrl(String url) {
         vault_url.setText(url);
+    }
+
+    public void setOnClickListener(View.OnClickListener onClickListener) {
+        holderView.setOnClickListener(onClickListener);
     }
 }

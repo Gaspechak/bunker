@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,8 +54,21 @@ public class MainActivity extends AppCompatActivity implements MainView {
             adapter = new FirebaseRecyclerAdapter<Vault, VaultViewHolder>(Vault.class, R.layout.view_holder_vault, VaultViewHolder.class, presenter.getReference()) {
                 @Override
                 protected void populateViewHolder(VaultViewHolder viewHolder, Vault model, int position) {
+                    model.key = adapter.getRef(position).getKey();
+
+                    final Vault modelRef = model;
+
                     viewHolder.setDescription(model.description);
                     viewHolder.setUrl(model.url);
+
+                    viewHolder.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent i = new Intent(MainActivity.this, PasswordActivity.class);
+                            i.putExtra("vault", modelRef);
+                            startActivity(i);
+                        }
+                    });
                 }
             };
 
