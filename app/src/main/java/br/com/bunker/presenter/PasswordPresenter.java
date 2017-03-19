@@ -16,6 +16,6 @@ public class PasswordPresenter {
 
     public void save() {
         db.insert(passwordView.getVault());
-        passwordView.showMessege(passwordView.getString(R.string.msg_success_saved));
+        passwordView.showMessege(passwordView.getString(R.string.msg_success_saved), true);
     }
 }

@@ -60,7 +60,10 @@ public class PasswordActivity extends AppCompatActivity implements PasswordView 
     }
 
     @Override
-    public void showMessege(String messege) {
+    public void showMessege(String messege, Boolean finishActivity) {
+        if (finishActivity) {
+            finish();
+        }
         Toast.makeText(this, messege, Toast.LENGTH_LONG).show();
     }
 
