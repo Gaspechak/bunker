@@ -17,6 +17,8 @@ public class PasswordActivity extends AppCompatActivity implements PasswordView 
 
     private PasswordPresenter presenter;
 
+    private Vault vault;
+
     //region fields
 
     @BindView(R.id.input_description)
@@ -42,19 +44,34 @@ public class PasswordActivity extends AppCompatActivity implements PasswordView 
         setContentView(R.layout.activity_password);
         ButterKnife.bind(this);
 
+        vault = getIntent().getParcelableExtra("vault");
+
+        if (vault != null) {
+            inputDescription.setText(vault.description);
+            inputURL.setText(vault.url);
+            inputUserName.setText(vault.username);
+            inputPassword.setText(vault.password);
+            inputNote.setText(vault.note);
+        }
+
         presenter = new PasswordPresenter(this);
     }
 
     @Override
     public Vault getVault() {
-        Vault v = new Vault();
+        Vault v;
+
+        if (vault != null) {
+            v = vault;
+        } else {
+            v = new Vault();
+        }
 
         v.description = inputDescription.getText().toString();
         v.url = inputURL.getText().toString();
         v.username = inputUserName.getText().toString();
         v.password = inputPassword.getText().toString();
         v.note = inputNote.getText().toString();
-
 
         return v;
     }
