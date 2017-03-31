@@ -13,4 +13,5 @@
     <string name="hint_note">Anotações</string>
     <string name="menu_save">salvar</string>
     <string name="msg_success_saved">Suas informações foram salvas.</string>
+    <string name="search_title">Pesquisar…</string>
 </resources>
