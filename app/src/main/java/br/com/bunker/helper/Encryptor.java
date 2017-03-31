@@ -1,6 +1,8 @@
 package br.com.bunker.helper;
 
 
+import android.util.Base64;
+
 import java.security.MessageDigest;
 import java.security.SecureRandom;
 
@@ -9,7 +11,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 public class Encryptor {
-    public static byte[] encrypt(String plainText, String key) throws Exception {
+    public static String encrypt(String plainText, String key) throws Exception {
         byte[] clean = plainText.getBytes();
 
         // Generating IV.
@@ -20,7 +22,7 @@ public class Encryptor {
         IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
 
         // Hashing key.
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        MessageDigest digest = MessageDigest.getInstance("SHA-512");
         digest.update(key.getBytes("UTF-8"));
         byte[] keyBytes = new byte[16];
         System.arraycopy(digest.digest(), 0, keyBytes, 0, keyBytes.length);
@@ -36,10 +38,13 @@ public class Encryptor {
         System.arraycopy(iv, 0, encryptedIVAndText, 0, ivSize);
         System.arraycopy(encrypted, 0, encryptedIVAndText, ivSize, encrypted.length);
 
-        return encryptedIVAndText;
+        return Base64.encodeToString(encryptedIVAndText, Base64.DEFAULT);
     }
 
-    public static String decrypt(byte[] encryptedIvTextBytes, String key) throws Exception {
+    public static String decrypt(String encryptedText, String key) throws Exception {
+
+        byte[] encryptedIvTextBytes = Base64.decode(encryptedText, Base64.DEFAULT);
+
         int ivSize = 16;
         int keySize = 16;
 
@@ -55,7 +60,7 @@ public class Encryptor {
 
         // Hash key.
         byte[] keyBytes = new byte[keySize];
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        MessageDigest md = MessageDigest.getInstance("SHA-512");
         md.update(key.getBytes());
         System.arraycopy(md.digest(), 0, keyBytes, 0, keyBytes.length);
         SecretKeySpec secretKeySpec = new SecretKeySpec(keyBytes, "AES");
