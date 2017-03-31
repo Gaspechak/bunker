@@ -6,6 +6,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.orhanobut.hawk.Hawk;
 
 import br.com.bunker.view.LoginView;
 
@@ -17,13 +18,14 @@ public class LoginPresenter {
         this.loginView = loginView;
     }
 
-    public void login(String email, String password) {
+    public void login(final String email, final String password) {
         if (!email.isEmpty() && !password.isEmpty()) {
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         loginView.showMainActivity();
+                        Hawk.put("pwd", password + email + task.getResult().getUser().getUid());
                     } else {
                         loginView.showMessage(task.getException().getMessage());
                     }
