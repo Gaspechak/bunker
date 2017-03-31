@@ -1,13 +1,16 @@
 package br.com.bunker.view;
 
+import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.orhanobut.hawk.Hawk;
+
 import br.com.bunker.R;
+import br.com.bunker.helper.Encryptor;
 import br.com.bunker.model.Vault;
 import br.com.bunker.presenter.PasswordPresenter;
 import butterknife.BindView;
@@ -50,7 +53,11 @@ public class PasswordActivity extends AppCompatActivity implements PasswordView 
             inputDescription.setText(vault.description);
             inputURL.setText(vault.url);
             inputUserName.setText(vault.username);
-            inputPassword.setText(vault.password);
+            try {
+                inputPassword.setText(Encryptor.decrypt(vault.password, Hawk.get("pwd").toString()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             inputNote.setText(vault.note);
         }
 
