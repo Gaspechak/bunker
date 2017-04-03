@@ -1,10 +1,10 @@
 package br.com.bunker.presenter;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.orhanobut.hawk.Hawk;
 
 import br.com.bunker.R;
 import br.com.bunker.database.VaultDAO;
+import br.com.bunker.helper.ConfirmCallback;
 import br.com.bunker.helper.Encryptor;
 import br.com.bunker.model.Vault;
 import br.com.bunker.view.PasswordView;
@@ -36,5 +36,14 @@ public class PasswordPresenter {
         }
 
         passwordView.showMessege(passwordView.getString(R.string.msg_success_saved), true);
+    }
+
+    public void delete() {
+        passwordView.showConfirmDialog(new ConfirmCallback() {
+            @Override
+            public void OnDialogClose(Boolean result) {
+                if(result) db.remove(passwordView.getVault().key);
+            }
+        });
     }
 }
