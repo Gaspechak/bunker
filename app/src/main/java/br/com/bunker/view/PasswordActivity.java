@@ -103,6 +103,8 @@ public class PasswordActivity extends AppCompatActivity implements PasswordView 
 
         if (id == R.id.action_save) {
             presenter.save();
+        } else if (id == R.id.action_delete) {
+            if (vault != null) presenter.delete();
         }
 
         return super.onOptionsItemSelected(item);
