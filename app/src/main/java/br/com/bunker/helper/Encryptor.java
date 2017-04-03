@@ -38,12 +38,12 @@ public class Encryptor {
         System.arraycopy(iv, 0, encryptedIVAndText, 0, ivSize);
         System.arraycopy(encrypted, 0, encryptedIVAndText, ivSize, encrypted.length);
 
-        return Base64.encodeToString(encryptedIVAndText, Base64.DEFAULT);
+        return Base64.encodeToString(encryptedIVAndText, Base64.NO_WRAP);
     }
 
     public static String decrypt(String encryptedText, String key) throws Exception {
 
-        byte[] encryptedIvTextBytes = Base64.decode(encryptedText, Base64.DEFAULT);
+        byte[] encryptedIvTextBytes = Base64.decode(encryptedText, Base64.NO_WRAP);
 
         int ivSize = 16;
         int keySize = 16;
