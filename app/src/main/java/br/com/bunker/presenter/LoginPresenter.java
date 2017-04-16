@@ -21,6 +21,7 @@ public class LoginPresenter {
 
     public void login(final String email, final String password) {
         if (!email.isEmpty() && !password.isEmpty()) {
+            loginView.showLoading();
             FirebaseAuth.getInstance().signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -30,6 +31,7 @@ public class LoginPresenter {
                     } else {
                         loginView.showMessage(task.getException().getMessage());
                     }
+                    loginView.hideLoading();
                 }
             });
         }
