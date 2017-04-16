@@ -14,6 +14,6 @@
     <string name="menu_save">salvar</string>
     <string name="msg_success_saved">Suas informações foram salvas.</string>
     <string name="msg_failed_save">Você precisa preencher todos os campos com exceção das anotações.</string>
-    <string name="search_title">Pesquisar…</string>
+    <string name="search_title">O que você está procurando?</string>
     <string name="menu_delete">Excluir</string>
 </resources>
