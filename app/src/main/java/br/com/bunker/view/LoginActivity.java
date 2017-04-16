@@ -62,4 +62,10 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
     public void onClickLogin() {
         presenter.login(txtEmail.getText().toString(), txtPassword.getText().toString());
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
 }
