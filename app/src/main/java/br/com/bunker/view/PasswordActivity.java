@@ -118,6 +118,9 @@ public class PasswordActivity extends AppCompatActivity implements PasswordView 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.password_menu, menu);
+        if(vault == null){
+            menu.removeItem(R.id.action_delete);
+        }
         return super.onCreateOptionsMenu(menu);
     }
 
