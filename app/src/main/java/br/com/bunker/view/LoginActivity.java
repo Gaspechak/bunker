@@ -68,4 +68,9 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
         super.onPause();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
+
+    @OnClick(R.id.btn_signup)
+    public void signUp() {
+        startActivity(new Intent(this, SignupActivity.class));
+    }
 }
