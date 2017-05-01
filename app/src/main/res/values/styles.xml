@@ -13,12 +13,13 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTheme.Button">
+    <style name="AppTheme.Button" parent="Widget.AppCompat.Button.Borderless.Colored">
         <item name="android:clickable">true</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:background">@color/colorPrimaryDark</item>
     </style>
+
 
     <style name="AppTheme.InputLayout">
         <item name="android:layout_marginBottom">10dp</item>

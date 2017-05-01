@@ -16,4 +16,6 @@
     <string name="msg_failed_save">Você precisa preencher todos os campos com exceção das anotações.</string>
     <string name="search_title">O que você está procurando?</string>
     <string name="menu_delete">Excluir</string>
+    <string name="status_connecting">Conectando…</string>
+    <string name="hint_signup">Cadastre-se</string>
 </resources>
