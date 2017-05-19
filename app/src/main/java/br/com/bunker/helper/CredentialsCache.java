@@ -1,6 +1,8 @@
 package br.com.bunker.helper;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.orhanobut.hawk.Hawk;
 
 import java.io.UnsupportedEncodingException;
@@ -19,7 +21,8 @@ public class CredentialsCache {
 
     public static boolean validate(String credentials) {
         try {
-            return SHA512(credentials).equals(Hawk.get("pwd"));
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            return SHA512(credentials + user.getEmail() + user.getUid()).equals(Hawk.get("pwd"));
         } catch (NoSuchAlgorithmException | UnsupportedEncodingException e) {
             e.printStackTrace();
             return false;
