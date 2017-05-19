@@ -1,6 +1,7 @@
 package br.com.bunker.view;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AlertDialog;
@@ -52,18 +53,37 @@ public class PasswordActivity extends AppCompatActivity implements PasswordView 
         vault = getIntent().getParcelableExtra("vault");
 
         if (vault != null) {
-            inputDescription.setText(vault.description);
-            inputURL.setText(vault.url);
-            inputUserName.setText(vault.username);
-            try {
-                inputPassword.setText(Encryptor.decrypt(vault.password, Hawk.get("pwd").toString()));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            inputNote.setText(vault.note);
+            setVault();
         }
 
+        Vault cacheVault = vault != null ? vault : getVault();
+
+        if (savedInstanceState == null) savedInstanceState = new Bundle();
+
+        savedInstanceState.putParcelable("vault", cacheVault);
+
         presenter = new PasswordPresenter(this);
+    }
+
+    public void setVault() {
+        inputDescription.setText(vault.description);
+        inputURL.setText(vault.url);
+        inputUserName.setText(vault.username);
+        try {
+            inputPassword.setText(Encryptor.decrypt(vault.password, Hawk.get("pwd").toString()));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        inputNote.setText(vault.note);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        vault = savedInstanceState.getParcelable("vault");
+        if (vault != null) {
+            setVault();
+        }
     }
 
     @Override
@@ -118,7 +138,7 @@ public class PasswordActivity extends AppCompatActivity implements PasswordView 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.password_menu, menu);
-        if(vault == null){
+        if (vault == null) {
             menu.removeItem(R.id.action_delete);
         }
         return super.onCreateOptionsMenu(menu);
@@ -128,6 +148,8 @@ public class PasswordActivity extends AppCompatActivity implements PasswordView 
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        Hawk.put("isAuthValid", true);
+
         if (id == R.id.action_save) {
             presenter.save();
         } else if (id == R.id.action_delete) {
@@ -135,6 +157,29 @@ public class PasswordActivity extends AppCompatActivity implements PasswordView 
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Hawk.put("isAuthValid", true);
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onRestart() {
+        Object obj = Hawk.get("isAuthValid");
+        if (obj == null || obj.equals(false)) {
+            Intent i = new Intent(this, LockActivity.class);
+            startActivity(i);
+            moveTaskToBack(false);
+        }
+        super.onRestart();
+    }
+
+    @Override
+    protected void onStop() {
+        Hawk.put("isAuthValid", false);
+        super.onStop();
     }
 
     @Override

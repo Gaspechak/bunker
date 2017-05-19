@@ -10,15 +10,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-
-import java.util.List;
+import com.orhanobut.hawk.Hawk;
 
 import br.com.bunker.R;
 import br.com.bunker.helper.RecyclerAdapter;
@@ -112,8 +111,27 @@ public class MainActivity extends AppCompatActivity implements MainView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(presenter != null)
-        presenter.getReference().removeEventListener(listener);
+        if (presenter != null)
+            presenter.getReference().removeEventListener(listener);
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Object obj = Hawk.get("isAuthValid");
+        if (obj == null || obj.equals(false)) {
+            Intent i = new Intent(this, LockActivity.class);
+            i.putExtra("class", "br.com.bunker.view");
+            startActivity(i);
+            finish();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        Hawk.put("isAuthValid", false);
+        super.onStop();
     }
 
     @Override
@@ -154,7 +172,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     @Override
     protected void onPause() {
+        Hawk.put("isAuthValid", false);
         super.onPause();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
     }
+
+
 }

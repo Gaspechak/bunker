@@ -13,4 +13,10 @@ public class Bunker extends Application {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         Hawk.init(this).build();
     }
+
+    @Override
+    public void onTerminate() {
+        Hawk.put("isAuthValid", false);
+        super.onTerminate();
+    }
 }
