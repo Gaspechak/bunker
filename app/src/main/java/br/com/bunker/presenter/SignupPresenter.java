@@ -7,6 +7,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.orhanobut.hawk.Hawk;
 
 import br.com.bunker.model.User;
 import br.com.bunker.view.SignupView;
@@ -27,6 +28,7 @@ public class SignupPresenter {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
+                        Hawk.put("pwd", user.password);
                         changeUserName(user.name);
                     } else {
                         signupView.showMessage(task.getException().getMessage());
@@ -48,6 +50,7 @@ public class SignupPresenter {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 signupView.hideDialog();
+                signupView.navigateToMain();
             }
         });
     }

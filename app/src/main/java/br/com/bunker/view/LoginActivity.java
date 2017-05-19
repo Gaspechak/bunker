@@ -71,6 +71,12 @@ public class LoginActivity extends AppCompatActivity implements LoginView {
 
     @OnClick(R.id.btn_signup)
     public void signUp() {
-        startActivity(new Intent(this, SignupActivity.class));
+        startActivityForResult(new Intent(this, SignupActivity.class), 15);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 15 &&  resultCode == RESULT_OK) finish();
     }
 }

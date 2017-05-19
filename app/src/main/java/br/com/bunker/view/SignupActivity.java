@@ -1,5 +1,6 @@
 package br.com.bunker.view;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.design.widget.TextInputEditText;
@@ -63,6 +64,8 @@ public class SignupActivity extends AppCompatActivity implements SignupView {
 
     @Override
     public void navigateToMain() {
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_OK, returnIntent);
         finish();
         startActivity(new Intent(this, MainActivity.class));
     }
