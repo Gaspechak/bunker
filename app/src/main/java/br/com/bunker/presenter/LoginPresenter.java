@@ -28,6 +28,7 @@ public class LoginPresenter {
                     if (task.isSuccessful()) {
                         loginView.showMainActivity();
                         CredentialsCache.put(password + email + task.getResult().getUser().getUid());
+                        Hawk.put("isAuthValid", true);
                     } else {
                         loginView.showMessage(task.getException().getMessage());
                     }
