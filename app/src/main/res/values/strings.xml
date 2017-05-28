@@ -19,4 +19,7 @@
     <string name="status_connecting">Conectando…</string>
     <string name="hint_signup">Cadastre-se</string>
     <string name="hint_unlock">Desbloquear</string>
+    <string name="menu_options">Opções</string>
+    <string name="menu_configuracoes">Sobre</string>
+    <string name="menu_logout">Sair</string>
 </resources>
