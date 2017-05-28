@@ -61,14 +61,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
             rviewVaults.setLayoutManager(manager);
 
-            adapter = new VaultAdapter(this, new RecyclerAdapter.OnViewHolderClick() {
-                @Override
-                public void onClick(View view, int position) {
-                    Intent i = new Intent(MainActivity.this, PasswordActivity.class);
-                    i.putExtra("vault", adapter.getItem(position));
-                    startActivity(i);
-                }
-            });
+            adapter = new VaultAdapter(this);
 
             rviewVaults.setAdapter(adapter);
 
