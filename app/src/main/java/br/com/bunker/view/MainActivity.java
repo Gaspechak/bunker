@@ -18,7 +18,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.orhanobut.hawk.Hawk;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.bunker.R;
 import br.com.bunker.helper.RecyclerAdapter;
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
             rviewVaults.setHasFixedSize(true);
 
-            LinearLayoutManager manager = new LinearLayoutManager(this);
+            final LinearLayoutManager manager = new LinearLayoutManager(this);
 
             manager.setOrientation(LinearLayoutManager.VERTICAL);
 
@@ -69,19 +73,20 @@ public class MainActivity extends AppCompatActivity implements MainView {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                     adapter.addToList(getVault(dataSnapshot));
-                    adapter.notifyDataSetChanged();
+                    adapter.notifyItemInserted(adapter.getItemCount());
                 }
 
                 @Override
                 public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                     adapter.updateToList(dataSnapshot.getKey(), getVault(dataSnapshot));
-                    adapter.notifyDataSetChanged();
+                    adapter.notifyItemChanged(adapter.getPosition(dataSnapshot.getKey()));
                 }
 
                 @Override
                 public void onChildRemoved(DataSnapshot dataSnapshot) {
+                    int position = adapter.getPosition(dataSnapshot.getKey());
                     adapter.removeToList(dataSnapshot.getKey());
-                    adapter.notifyDataSetChanged();
+                    adapter.notifyItemRemoved(position);
                 }
 
                 @Override

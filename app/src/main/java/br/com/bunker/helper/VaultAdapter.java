@@ -100,7 +100,7 @@ public class VaultAdapter extends RecyclerAdapter<Vault> {
                 .into(logo);
     }
 
-    public void search(String query){
+    public void search(String query) {
         if (query != null && query.length() > 0) {
             String filter = query.toLowerCase().trim();
 
@@ -135,6 +135,17 @@ public class VaultAdapter extends RecyclerAdapter<Vault> {
                 break;
             }
         }
+    }
+
+    public int getPosition(String key) {
+        int index = 0;
+        for (int i = 0; i < adapterList.size(); i++) {
+            if (adapterList.get(i).key.equals(key)) {
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 
     public void removeToList(String key) {
