@@ -8,9 +8,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.orhanobut.hawk.Hawk;
+
+import java.math.BigInteger;
+import java.security.SecureRandom;
 
 import br.com.bunker.R;
 import br.com.bunker.helper.ConfirmCallback;
@@ -19,6 +23,7 @@ import br.com.bunker.model.Vault;
 import br.com.bunker.presenter.PasswordPresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class PasswordActivity extends AppCompatActivity implements PasswordView {
 
@@ -186,5 +191,10 @@ public class PasswordActivity extends AppCompatActivity implements PasswordView 
     protected void onPause() {
         super.onPause();
         overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+    }
+
+    @OnClick(R.id.random)
+    public void OnClickRandom(){
+        inputPassword.setText(new BigInteger(130, new SecureRandom()).toString(32));
     }
 }
